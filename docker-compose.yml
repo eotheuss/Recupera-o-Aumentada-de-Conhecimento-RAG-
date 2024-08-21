@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: rag_app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - CHROMADB_URI=http://chroma:8000
+
+  chroma:
+    image: chromadb/chromadb:latest
+    container_name: chromadb
+    ports:
+      - "8001:8001"
+    volumes:
+      - chroma_data:/data
+
+volumes:
+  chroma_data:
